@@ -23,8 +23,10 @@
         err.print(std::cerr); \
     }
 
+// sdl conversion
 #define to_window (SDL_Window*)
 #define to_target (GPU_Target*)
+#define to_event (SDL_Event*)
 
 using namespace RCE;
 
@@ -216,4 +218,88 @@ void RC_Engine::quit(void){
     quit_SDL2_mixer();
     quit_SDL2_ttf();
     quit_SDL2();
+}
+
+RCE::Error* RC_Engine::get_error(void){
+    if (errors.empty()) return nullptr;
+    return &errors.front();
+}
+
+RCE::Error RC_Engine::pop_error(void){
+    if (errors.empty()) return Error();
+    auto err = errors.front();
+    errors.pop_front();
+    return err;
+}
+
+void RC_Engine::print_error(std::ostream stream){
+    errors.front().print(stream);
+}
+
+const int RC_Engine::get_errors_size(void) const{
+    return errors.size();
+}
+
+bool RC_Engine::is_error(void) const{
+    return errors.size() > 0;
+}
+
+void RC_Engine::run(void){
+    running = true;
+
+    
+}
+
+/**  event  **/
+
+using namespace event;
+
+Keypad::Keypad(){
+    for (int i=0; i<NUM_KEY; i++){
+        push[i] = false;
+        up[i] = true;
+        down[i] = false;
+    }
+}
+
+Keypad::~Keypad(){
+
+}
+
+void Keypad::OnEvent(void *e){
+    SDL_Event* event = to_event e;
+
+    switch (event->type){
+        case SDL_KEYDOWN:
+            push[event->key.keysym.scancode] = true;
+            down[event->key.keysym.scancode] = true;
+            break;
+        
+        case SDL_KEYUP:
+            up[event->key.keysym.scancode] = true;
+            down[event->key.keysym.scancode] = false;
+            break;
+        
+        default:
+            break;
+    }
+}
+
+void Keypad::OnTick(){
+    for (int i=0; i<NUM_KEY; i++){
+        push[i] = false;
+        up[i] = false;
+    }
+}
+
+bool Keypad::is_key_down(Key key){
+    return down[key];
+}
+
+bool Keypad::is_key_up(Key key){
+    return up[key];
+}
+
+bool Keypad::is_key_pushed(Key key){
+    return push[key];
 }
