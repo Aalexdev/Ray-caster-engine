@@ -1,2 +1,2 @@
 g++ -c -D RCE_BUILD_DLL .\src\*.cpp -I .\include\ -o .\.obj\RC-engine.o
-g++ -shared -o .\out\RC_engine_lib.dll .\.obj\RC-engine.o -Wl,--out-implib,.\out\libshared_lib.a
+g++ -shared -o .\out\RC_engine_lib.dll .\.obj\RC-engine.o  -L .\lib\ -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_GPU -lSDL2_ttf -lSDL2_mixer  -Wl,--out-implib,.\out\RC_engine_lib.a
