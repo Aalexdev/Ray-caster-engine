@@ -11,6 +11,7 @@
     #include "RCE-Mouse.hpp"
     #include "RCE-Error.hpp"
     #include "RCE-Version.hpp"
+    #include "RCE-Color.hpp"
 
     namespace RCE{
 
@@ -82,6 +83,15 @@
              */
             void set_Ontick(std::function<void(const int)> fnc);
 
+            /**
+             * @brief set the clear color of the window
+             * 
+             * @param r the red channel
+             * @param g the green channel
+             * @param b the blue channel
+             */
+            void set_clear_color(unsigned char r, unsigned char g, unsigned char b);
+
         private:
             void *window;
             void *target;
@@ -119,8 +129,12 @@
 
             void event(void);
             void update(void);
+            void clear(void);
+            void flip(void);
 
             std::function<void(const int)> OnTick;
+
+            RCE::Color clear_color;
     };
 
 #endif

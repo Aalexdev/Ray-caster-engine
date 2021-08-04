@@ -191,6 +191,8 @@ void RC_Engine::run(void){
     while (running){
         event();
         update();
+        clear();
+        flip();
     }
 }
 
@@ -222,4 +224,16 @@ void RC_Engine::update(void){
 
 void RC_Engine::set_Ontick(std::function<void(const int)> fnc){
     OnTick = fnc;
+}
+
+void RC_Engine::set_clear_color(unsigned char r, unsigned char g, unsigned char b){
+    clear_color.set_rgb(r, g, b);
+}
+
+void RC_Engine::clear(void){
+    GPU_ClearRGB(to_target target, clear_color.red(), clear_color.green(), clear_color.blue());
+}
+
+void RC_Engine::flip(void){
+    GPU_Flip(to_target target);
 }
