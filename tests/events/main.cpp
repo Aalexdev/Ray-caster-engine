@@ -1,6 +1,5 @@
 #include <iostream>
-#include <RC-Engine.hpp>
-
+#include <RCE-Engine.hpp>
 
 class Game{
     public:
@@ -14,9 +13,8 @@ class Game{
 };
 
 void Game::OnTick(const int delta){
-
+    
 }
-
 
 Game::Game(){
     engine.init();

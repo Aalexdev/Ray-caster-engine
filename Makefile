@@ -11,10 +11,6 @@ DEFINE = RCE_BUILD_DLL
 
 all : $(OUT)
 
-test : $(OUT)
-	@echo launch
-	@$(OUT)
-
 .obj/%.o : src/%.cpp
 	@echo compiling $@ from $< ...
 	@$(CXX) -std=$(STD_VERSION) -o $@ -c -D $(DEFINE) $< -I $(INCLUDE)
@@ -24,9 +20,9 @@ test : $(OUT)
 	@$(CXX) -std=$(STD_VERSION) -o $@ -c $< -I $(INCLUDE)
 
 $(OUT) : $(OBJ)
-	@echo building the executable ...
+	@echo building library ...
 	@$(CXX) -std=$(STD_VERSION) -shared -o $(OUT).dll .obj/*.o -L $(LIB) $(FLAGS) -Wl,--out-implib,$(OUT).a
-	@echo executable bluid, ready to launch
+	@echo library builded with success
 
 clean:
 	@echo clear .obj folder
