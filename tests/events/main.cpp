@@ -1,19 +1,34 @@
 #include <iostream>
 #include <RC-Engine.hpp>
 
-void OnTick(const int delta){
-    std::cout << "test" << std::endl;
+
+class Game{
+    public:
+        Game();
+        ~Game();
+        
+        static void OnTick(const int delta);
+    
+    private:
+        RC_Engine engine;
+};
+
+void Game::OnTick(const int delta){
+
+}
+
+
+Game::Game(){
+    engine.init();
+    engine.set_Ontick(OnTick);
+    engine.run();
+}
+
+Game::~Game(){
+    engine.quit();
 }
 
 int main(void){
 
-    RC_Engine engine;
-
-    engine.init();
-
-    engine.set_Ontick(OnTick);
-    engine.run();
-
-    engine.quit();
-
+    Game game;
 };

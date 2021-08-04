@@ -272,11 +272,11 @@ void RC_Engine::event(void){
 }
 
 void RC_Engine::update(void){
-    keypad.OnTick();
-    mouse.OnTick();
-
     if (OnTick)
         OnTick(0);
+
+    keypad.OnTick();
+    mouse.OnTick();
 }
 
 void RC_Engine::set_Ontick(std::function<void(const int)> fnc){
@@ -295,9 +295,7 @@ Keypad::Keypad(){
     }
 }
 
-Keypad::~Keypad(){
-
-}
+Keypad::~Keypad(){}
 
 void Keypad::OnEvent(void *e){
     SDL_Event* event = to_event e;
@@ -468,6 +466,7 @@ void Mouse::OnEvent(void *e){
                 wheel_down = true;
 
             }
+            break;
         
         default:
             break;
