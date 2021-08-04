@@ -29,11 +29,6 @@
 
 using namespace RCE;
 
-/* -- Error class -- */
-
-
-/* -- end of the Error class -- */
-
 RC_Engine::RC_Engine(){
     reset_init();
 }
